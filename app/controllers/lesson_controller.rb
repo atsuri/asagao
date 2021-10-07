@@ -74,4 +74,12 @@ class LessonController < ApplicationController
         @items = { "フライパン" => 2680, "ワイングラス" => 2550, "ペッパーミル" => 4515, "ピーラ" => 945}
     end
 
+    def step19
+        @name = params[:name]
+    end
+
+    def step20
+        @price = params[:name].to_i
+    end
+
 end
