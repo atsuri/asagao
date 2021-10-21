@@ -3,6 +3,11 @@
 
 <%= form_tag :search_members, method: :get, class: "search" do %>
     <%= text_field_tag "q", params[:q] %>
+    <%= check_box_tag "m", 1 %>
+    <%= label_tag "男" %>
+    <%= check_box_tag "w", 2 %>
+    <%= label_tag "女" %>
+
     <%= submit_tag "検索" %>
 <% end %>
 

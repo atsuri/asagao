@@ -6,7 +6,12 @@ class MembersController < ApplicationController
 
     #検索
     def search
-        @members = Member.search(params[:q])
+        @members = Member.search(params[:q]) 
+        # TODO: 授業内課題04
+        if params[:m].present? || params[:w].present?
+            @members = @members.where(sex: [params[:m], params[:w]])
+        end
+
         render "index"
     end
 
