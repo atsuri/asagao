@@ -1,21 +1,32 @@
 class ApplicationController < ActionController::Base
+    before_action :update_expiration_time
+
     private def current_member
-        Member.find_by(id: session[:member_id]) if session[:member_id]
+        Member.find_by(id: cookies[:member_id]) if cookies[:member_id]
+        # Member.find_by(id: cookies.signed[:member_id]) if cookies[:member_id]
     end
     helper_method :current_member
+
+    # TODO: 授業内課題6-03
+    private def update_expiration_time
+        if cookies[:member_id]
+            member = Member.find_by(id: cookies[:member_id])
+            cookies[:member_id] = { value: member.id, expires: 10.seconds.from_now }
+        end
+    end
 
     class LoginRequired < StandardError; end
     class Forbidden < StandardError; end
 
-    # TODO: ここがあるとうまくいかない。解決方法わからない。
-    # if Rails.env.production? || ENV["RESCUE_EXCEPTIONS"]
-    #     rescue_form StandardError, with: :rescue_internal_server_error
-    #     rescue_form ActiveRecord::RecordNotFound, with: :rescue_not_found
-    #     rescue_form ActionController::ParameterMissing, with: :rescue_bad_request
-    # end
+    # TODO: 11.2章のエラー解消
+    if Rails.env.production? || ENV["RESCUE_EXCEPTIONS"]
+        rescue_from StandardError, with: :rescue_internal_server_error
+        rescue_from ActiveRecord::RecordNotFound, with: :rescue_not_found
+        rescue_from ActionController::ParameterMissing, with: :rescue_bad_request
+    end
 
-    # rescue_form LoginRequired, with: :rescue_login_required
-    # rescue_form Forbidden, with: :rescue_forbidden
+    rescue_from LoginRequired, with: :rescue_login_required
+    rescue_from Forbidden, with: :rescue_forbidden
 
     private def login_required
         raise LoginRequired unless current_member
