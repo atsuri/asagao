@@ -3,12 +3,12 @@ class MembersController < ApplicationController
 
     #会員一覧
     def index
-        @members = Member.order("number")
+        @members = Member.order("number").page(params[:page]).per(15)
     end
 
     #検索
     def search
-        @members = Member.search(params[:q]) 
+        @members = Member.search(params[:q]).page(params[:page]).per(15) 
         # TODO: 授業内課題04
         if params[:m].present? || params[:w].present?
             @members = @members.where(sex: [params[:m], params[:w]])
