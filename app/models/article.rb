@@ -26,6 +26,7 @@ class Article < ApplicationRecord
     scope :visible, -> do
         now = Time.current
 
-        where("released_at <= ?", now).where("expired_at > ? OR expired_at IS NULL", now)
+        where("released_at <= ?", now)
+            .where("expired_at > ? OR expired_at IS NULL", now)
     end    
 end

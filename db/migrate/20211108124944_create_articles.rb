@@ -7,7 +7,7 @@ class CreateArticles < ActiveRecord::Migration[5.2]
       t.datetime :expired_at #投稿終了日時
       t.boolean :member_only, null: false, default: false #会員のみフラグ
 
-      t.timestamps null: false
+      t.timestamps
     end
   end
 end
