@@ -20,4 +20,5 @@ Rails.application.routes.draw do
 
   resources :articles
   resources :entries
+  resources :duties, only: [:index]
 end

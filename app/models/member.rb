@@ -2,6 +2,9 @@ class Member < ApplicationRecord
     has_secure_password
 
     has_many :entries, dependent: :destroy
+
+    # TODO: 授業内課題07-1
+    has_many :duties, dependent: :nullify
     
     validates :number, presence: true,
         numericality: {

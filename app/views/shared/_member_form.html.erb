@@ -32,6 +32,14 @@
         <th><%= form.label :email %></th>
         <td><%= form.text_field :email %></td>
     </tr>
+    <tr>
+        <th><%= form.label :duty, "役職" %></th>
+        <td>
+            <% Duty.all.each do |duty| %>
+                <%= form.check_box :duty_ids, { multiple: true }, duty.id, "" %><%= duty.name %>&emsp;
+            <% end %>
+        </td>
+    </tr>
     <% if @member.new_record? %>
         <tr>
             <th><%= form.label :password, "パスワード" %></th>
