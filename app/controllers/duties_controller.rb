@@ -5,10 +5,4 @@ class DutiesController < ApplicationController
     def index
         @duties = Duty.all
     end
-
-    #当番詳細
-    def show
-        duties = Duty.all
-        @duties = duties.find(params[:id])
-    end
 end

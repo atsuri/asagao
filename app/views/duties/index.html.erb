@@ -2,20 +2,23 @@
     <table class="list" >
         <thead>
             <tr>
-                <th>役職</th>
+                <th>当番</th>
                 <th>割り当て</th>
             </tr>
         </thead>
         <tbody>
             <% @duties.each do |duty| %>
                 <tr>
-                    <td><%= link_to duty.name %></td>
-                    <td><%= duty.member&.full_name %></td> 
+                    <td><%= duty.name %></td>
+                    <td>
+                        <% if duty.member&.full_name.present? %>
+                            <%= link_to duty.member&.full_name, member_path(duty.member_id) %>
+                        <% end %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>
     </table>
-    <%# <%= paginate @duties %>
 <% else %>
-    <p>ニュースがありません。</p>
+    <p>当番はありません。</p>
 <% end %>

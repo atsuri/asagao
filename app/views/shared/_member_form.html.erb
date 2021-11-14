@@ -33,7 +33,7 @@
         <td><%= form.text_field :email %></td>
     </tr>
     <tr>
-        <th><%= form.label :duty, "役職" %></th>
+        <th><%= form.label :duty, "当番" %></th>
         <td>
             <% Duty.all.each do |duty| %>
                 <%= form.check_box :duty_ids, { multiple: true }, duty.id, "" %><%= duty.name %>&emsp;
