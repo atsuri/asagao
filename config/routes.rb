@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   resource :password, olny: [:show, :edit, :update]
 
   resources :articles
-  resources :entries
+  resources :entries do
+    patch "like", "unlike", on: :member
+    get "voted", on: :collection
+  end
   resources :duties, only: [:index]
 end

@@ -3,6 +3,9 @@ class Member < ApplicationRecord
 
     has_many :entries, dependent: :destroy
 
+    has_many :votes, dependent: :destroy
+    has_many :voted_entries, through: :votes, source: :entry
+
     # TODO: 授業内課題07-1
     has_many :duties, dependent: :nullify
     
@@ -31,6 +34,10 @@ class Member < ApplicationRecord
     # TODO: 授業内課題05-2
     validates :birthday, date:{ before: Proc.new{ Date.today } }
 
+    def votable_for?(entry)
+        entry && entry.author != self && !votes.exists?(entry_id: entry.id)
+    end
+    
     class << self
         def search(query)
             rel = order("number")
