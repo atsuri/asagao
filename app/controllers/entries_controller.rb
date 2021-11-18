@@ -73,8 +73,18 @@ class EntriesController < ApplicationController
 
   #投票した記事
   def voted
-    @entries = current_member.voted_entries.published
+
+    if params[:id]
+      member = Member.find(params[:id])
+      
+    else
+      member = current_member
+
+    end
+
+    @entries = member.voted_entries.published
       .order("votes.created_at DESC")
       .page(params[:page]).per(15)
+
   end
 end
