@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   end
 
   resource :session, only: [:create, :destroy]
-  resource :account, only: [:show, :edit, :update]
-  resource :password, olny: [:show, :edit, :update]
+  resource :account, except: [:destroy]
+  resource :password, only: [:show, :edit, :update]
 
   resources :articles, only: [:index, :show]
   resources :entries do

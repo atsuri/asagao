@@ -7,7 +7,7 @@ class CreateMembers < ActiveRecord::Migration[5.2]
       t.string :email #メールアドレス
       t.date :birthday #生年月日
       t.integer :sex, null: false, default: 1 #性別（1:男, 2:女）
-      t.boolean :administrator, null: false, defalt: false #管理者フラグ
+      t.boolean :administrator, null: false, default: false #管理者フラグ
 
       t.timestamps
     end
