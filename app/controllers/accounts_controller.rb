@@ -14,7 +14,8 @@ class AccountsController < ApplicationController
   end
 
   def create
-    @member = Member.new(params[:account])
+    # @member = Member.new(params[:account])
+    @member = Member.new(account_params)
     if @member.save
       cookies[:member_id] = { value: @member.id, expires: 5.minutes.from_now }
       redirect_to :root, notice: "会員登録が完了しました。"
@@ -25,11 +26,24 @@ class AccountsController < ApplicationController
 
   def update
     @member = current_member
-    @member.assign_attributes(params[:account])
+    @member.assign_attributes(account_params)
     if @member.save
       redirect_to :account, notice: "アカウント情報を更新しました。"
     else
       render "edit"
     end
+  end
+
+  private def account_params
+    params.require(:account).permit(
+      :new_profile_picture,
+      :remove_profile_picture,
+      :number,
+      :name,
+      :full_name,
+      :sex,
+      :birthday,
+      :email
+    )
   end
 end

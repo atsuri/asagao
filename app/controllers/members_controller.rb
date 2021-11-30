@@ -24,6 +24,25 @@ class MembersController < ApplicationController
         @member = Member.find(params[:id])
     end
 
+    #ストロングパラメータ
+    private def member_params
+        attrs = [
+            :new_profile_picture,
+            :remove_profile_picture,
+            :number,
+            :name,
+            :full_name,
+            :sex,
+            :birthday,
+            :email,
+            :administrator
+        ]
+
+        attrs << :password if params[:action] == "create"
+
+        params.require(:member).permit(attrs)
+    end
+
 #     #新規作成フォーム
 #     def new
 #         @member = Member.new(birthday: Date.new(1989, 1, 1))
