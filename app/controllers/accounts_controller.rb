@@ -43,7 +43,8 @@ class AccountsController < ApplicationController
       :full_name,
       :sex,
       :birthday,
-      :email
+      :email,
+      :password
     )
   end
 end
