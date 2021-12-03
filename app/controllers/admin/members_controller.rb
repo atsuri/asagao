@@ -36,7 +36,7 @@ class Admin::MembersController < Admin::Base
     
     #会員の新規登録
     def create
-        @member = Member.new(params[:member])
+        @member = Member.new(member_params)
         if @member.save
             redirect_to [:admin, @member], notice: "会員を登録しました。"
         else
@@ -47,7 +47,7 @@ class Admin::MembersController < Admin::Base
     #会員情報の更新
     def update
         @member = Member.find(params[:id])
-        @member.assign_attributes(params[:member])
+        @member.assign_attributes(member_params)
         if @member.save
             redirect_to [:admin, @member], notice: "会員情報を更新しました。"
         else
@@ -60,5 +60,25 @@ class Admin::MembersController < Admin::Base
         @member = Member.find(params[:id])
         @member.destroy
         redirect_to :admin_members, notice: "会員を削除しました。"
+    end
+
+    #ストロングパラメータ
+    private def member_params
+        attrs = [
+            :new_profile_picture,
+            :remove_profile_picture,
+            :number,
+            :name,
+            :full_name,
+            :sex,
+            :birthday,
+            :email,
+            :administrator,
+            new_duty_ids: []
+        ]
+
+        attrs << :password if params[:action] == "create"
+
+        params.require(:member).permit(attrs)
     end
 end

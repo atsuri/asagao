@@ -6,6 +6,7 @@ ja:
       entry: ブログ記事
     attributes:
       member:
+        new_duty_ids: 当番
         new_profile_picture: プロフィール画像 
         remove_profile_picture: 画像を削除
         number: 背番号
@@ -41,3 +42,4 @@ ja:
         wrong: が正しくありません。
         expired_at_too_old: は掲載開始日より新しい日時にしてください。
         invalid_image_type: にはJPEG、PNG、GIF、PNG形式の画像を指定してください。
+        invalid_duty: は他メンバーと重複しています。

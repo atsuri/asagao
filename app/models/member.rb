@@ -6,6 +6,14 @@ class Member < ApplicationRecord
     attribute :new_profile_picture
     attribute :remove_profile_picture, :boolean
 
+    # TODO: 授業内課題10-1
+    attribute :new_duty_ids, :intarray, default: []
+    after_initialize do
+        if new_duty_ids
+            self.new_duty_ids.replace(self.duty_ids)
+        end
+    end
+
     has_many :votes, dependent: :destroy
     has_many :voted_entries, through: :votes, source: :entry
 
@@ -37,10 +45,20 @@ class Member < ApplicationRecord
     validate if: :new_profile_picture do
         if new_profile_picture.respond_to?(:content_type)
             unless new_profile_picture.content_type.in?(ALLOWED_CONTENT_TYPES)
-                error.add(:new_profile_picture, :invalid_image_type)
+                errors.add(:new_profile_picture, :invalid_image_type)
             end
         else
-            errors.add(:new_profile_picture, invalid)
+            errors.add(:new_profile_picture, :invalid)
+        end
+    end
+
+    # TODO: 授業内課題10-1
+    validate do
+        new_duty_ids.each do |i|
+            who = Duty.find(i).member_id #誰がその当番になっているか
+            if who != nil && who != self.id
+                errors.add(:new_duty_ids, :invalid_duty)
+            end
         end
     end
 
@@ -50,6 +68,11 @@ class Member < ApplicationRecord
         elsif remove_profile_picture
             self.profile_picture.purge
         end
+
+        # TODO: 授業内課題10-1
+        # if new_duty_ids #ずっとtrue
+        self.duty_ids = new_duty_ids
+        # end
     end
     
     # TODO: 授業内課題05-2

@@ -49,7 +49,10 @@
         <th><%= form.label :duty, "当番" %></th>
         <td>
             <% Duty.all.each do |duty| %>
-                <%= form.check_box :duty_ids, { multiple: true }, duty.id, "" %><%= duty.name %>&emsp;
+                <% who = duty.member_id %>
+                <%= form.check_box :new_duty_ids, 
+                    { multiple: true, disabled: who != nil && who != @member.id }, duty.id, "" %>
+                <%= duty.name %>&emsp;
             <% end %>
         </td>
     </tr>

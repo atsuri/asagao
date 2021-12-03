@@ -44,7 +44,8 @@ class AccountsController < ApplicationController
       :sex,
       :birthday,
       :email,
-      :password
+      :password,
+      new_duty_ids: []
     )
   end
 end
