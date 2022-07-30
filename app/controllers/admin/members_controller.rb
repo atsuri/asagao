@@ -46,7 +46,7 @@ class Admin::MembersController < Admin::Base
 
     #会員情報の更新
     def update
-        @member = Member.find(params[:id])
+        @member = Member.find(params[:member])
         @member.assign_attributes(member_params)
         if @member.save
             redirect_to [:admin, @member], notice: "会員情報を更新しました。"

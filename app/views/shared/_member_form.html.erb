@@ -50,8 +50,7 @@
         <td>
             <% Duty.all.each do |duty| %>
                 <% who = duty.member_id %>
-                <%= form.check_box :new_duty_ids, 
-                    { multiple: true, disabled: who != nil && who != @member.id }, duty.id, "" %>
+                <%= form.check_box :new_duty_ids, { multiple: true, disabled: who != nil && who != @member.id }, duty.id, "" %>
                 <%= duty.name %>&emsp;
             <% end %>
         </td>
